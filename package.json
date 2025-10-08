@@ -1,0 +1,105 @@
+{
+  "name": "@jolt-editor/core",
+  "version": "0.1.0",
+  "description": "A lightweight Web Component for authoring and testing JOLT transformation specifications",
+  "type": "module",
+  "main": "dist/jolt-editor.umd.js",
+  "module": "dist/jolt-editor.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/jolt-editor.js",
+      "require": "./dist/jolt-editor.umd.js"
+    },
+    "./middleware": {
+      "import": "./middleware/index.mjs",
+      "require": "./middleware/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "middleware",
+    "examples"
+  ],
+  "scripts": {
+    "dev": "npx concurrently \"npm run dev:vite\" \"npm run dev:server\"",
+    "dev:vite": "vite",
+    "dev:server": "cd examples/express-integration && node server.js",
+    "dev:frontend-only": "vite",
+    "dev:sequential": "npm run dev:server && npm run dev:vite",
+    "dev:windows": "npx concurrently \"npm run dev:vite\" \"npm run dev:server\"",
+    "setup": "npm install && cd examples/express-integration && npm install && cd ../..",
+    "setup:full": "npm run setup && cd middleware/lib && curl -o jolt-core-0.1.8.jar https://repo1.maven.org/maven2/com/bazaarvoice/jolt/jolt-core/0.1.8/jolt-core-0.1.8.jar || echo 'Download JOLT JAR manually if curl failed' && cd ../..",
+    "build": "vite build && tsc --declaration --emitDeclarationOnly --outDir dist --noEmit false",
+    "preview": "vite preview",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch",
+    "dev:full": "npm run type-check:watch & npm run dev",
+    "test": "web-test-runner",
+    "test:watch": "web-test-runner --watch",
+    "test:coverage": "web-test-runner --coverage",
+    "test:init": "node test-project-init.js",
+    "test:config": "node test-typescript-config.js",
+    "test:dev": "node test-dev-server.js"
+  },
+  "keywords": [
+    "jolt",
+    "json",
+    "transformation",
+    "web-component",
+    "lit",
+    "editor",
+    "monaco"
+  ],
+  "author": "",
+  "license": "MIT",
+  "customElements": "custom-elements.json",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/jolt-editor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/jolt-editor/issues"
+  },
+  "homepage": "https://github.com/your-org/jolt-editor#readme",
+  "dependencies": {
+    "@lit-labs/virtualizer": "^2.1.1",
+    "@material/web": "^2.4.0",
+    "@monaco-editor/loader": "^1.5.0",
+    "cors": "^2.8.5",
+    "fuse.js": "^6.6.2",
+    "java-bridge": "^2.4.0",
+    "lit": "^3.3.1",
+    "lru-cache": "^10.0.0",
+    "monaco-editor": "^0.53.0"
+  },
+  "peerDependencies": {
+    "express": "^4.21.2"
+  },
+  "peerDependenciesMeta": {
+    "express": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@esm-bundle/chai": "^4.3.4-fix.0",
+    "@open-wc/testing": "^4.0.0",
+    "@types/node": "^24.3.1",
+    "@types/sinon": "^17.0.4",
+    "@vitejs/plugin-basic-ssl": "^2.1.0",
+    "@web/dev-server-esbuild": "^1.0.4",
+    "@web/test-runner": "^0.20.2",
+    "@web/test-runner-playwright": "^0.11.1",
+    "concurrently": "^9.2.1",
+    "sinon": "^21.0.0",
+    "terser": "^5.44.0",
+    "typescript": "^5.9.2",
+    "vite": "^6.3.6",
+    "vite-plugin-monaco-editor": "^1.1.0"
+  }
+}
